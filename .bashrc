@@ -30,4 +30,4 @@ parse_git_branch_information() {
   fi
 }
 
-export PS1="\e[44m\u@\h\e[49m \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch_information)\[\e[00m\]\n$(tput bold)\e[93m>\e[39m$(tput sgr0) "
+export PS1="\[\e[44m\]\u@\h\[\e[49m\] \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch_information)\[\e[00m\]\n\[\e[93m\]>\[\e[39m\] "
