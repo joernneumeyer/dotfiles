@@ -7,7 +7,7 @@ parse_git_branch_information() {
       branch_status="${branch_status}!"
     fi
     branch="$(git rev-parse --abbrev-ref HEAD)"
-    if [ "$(git merge-base ${branch} origin/${branch} 2>&1)" ]
+    if [ "$(git merge-base ${branch} origin/${branch} 2>&1 > /dev/null)" ]
     then
       base="a"
       remote="b"
@@ -22,10 +22,16 @@ parse_git_branch_information() {
       :
     elif [ "${remote}" = "${base}" ]
     then
-      branch_status="${branch_status}ᐃ"
+      local_count=$(git rev-list --count ${local})
+      base_count=$(git rev-list --count ${base})
+      let diff_count="${local_count} - ${base_count}"
+      branch_status="${branch_status}ᐃ [+${diff_count}]"
     elif [ ${local} = "${base}" ]
     then
-      branch_status="${branch_status}ᐁ"
+      local_count=$(git rev-list --count ${local})
+      remote_count=$(git rev-list --count ${remote})
+      let diff_count="${local_count} - ${remote_count}"
+      branch_status="${branch_status}ᐁ [${diff_count}]"
     else
       branch_status="${branch_status}⬄"
     fi
