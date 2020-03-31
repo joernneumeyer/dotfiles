@@ -7,9 +7,16 @@ parse_git_branch_information() {
       branch_status="${branch_status}!"
     fi
     branch="$(git rev-parse --abbrev-ref HEAD)"
-    base="$(git merge-base ${branch} origin/${branch})"
-    remote="$(git rev-parse origin/${branch})"
-    local="$(git rev-parse ${branch})"
+    if [ "$(git merge-base ${branch} origin/${branch} 2>&1)" ]
+    then
+      base="a"
+      remote="b"
+      local="c"
+    else
+      base="$(git merge-base ${branch} origin/${branch})"
+      remote="$(git rev-parse origin/${branch})"
+      local="$(git rev-parse ${branch})"
+    fi
     if [ "${remote}" = "${base}" ] && [ ${local} = "${base}" ]
     then
       :
@@ -30,4 +37,4 @@ parse_git_branch_information() {
   fi
 }
 
-export PS1="\[\e[44m\]\u@\h\[\e[49m\] \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch_information)\[\e[00m\]\n\[\e[93m\]>\[\e[39m\] "
+export PS1="\[\e[31m\][\[\e[93m\]\u\[\e[95m\]@\[\e[94m\]\h\[\e[31m\]]\[\e[39m\] \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch_information)\n\[\e[32m\]\[\e[1m\]>\[\e[0m\]\[\e[39m\] "
