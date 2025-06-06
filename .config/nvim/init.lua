@@ -1,6 +1,8 @@
 #!/usr/bin/lua
 local vimrc = vim.fn.stdpath("config") .. "/setup.vim"
 vim.cmd.source(vimrc)
-asdlfmelfm
 
-require'lspconfig'.lua_ls.setup{}
+
+local lsp_config = require 'lspconfig'
+lsp_config.lua_ls.setup{}
+

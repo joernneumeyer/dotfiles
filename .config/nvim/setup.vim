@@ -23,4 +23,5 @@ call plug#begin("~/.vim/plugged")
  Plug 'preservim/nerdcommenter'
  Plug 'mhinz/vim-startify'
  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+ Plug 'neovim/nvim-lspconfig'
 call plug#end()
